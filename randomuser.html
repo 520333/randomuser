@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Page</title>
+    <link rel="stylesheet" href="./font-awesome-4.7.0/css/font-awesome.min.css">
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #container{
+            text-align: center;
+            width: 350px;
+            margin: 0 auto;
+            box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.1);
+            
+        }
+        h1{
+            margin: 5px auto;
+            width: 160px;
+            color:lightblue;
+            font-weight: 700;
+            font-size: 40px;
+            border-bottom: 3px solid #e8e8e8;
+        }
+        p span{
+            font-family:"微软雅黑";
+            color: #545C63;
+            font-weight: 300;
+        }
+        p{
+            color: #2c2e31;
+            font-size: 15px;
+            font-weight: 700;
+            margin:0 auto;
+        }
+        .fa{
+            color: lightcoral;
+        }
+        input{
+            color: #333;
+            display: block;
+            font-size: 20px;
+            margin: 20px auto;
+            background-color: #eeee;
+            border: 0;
+            transition: 0.5s;
+        }
+        input:hover{
+            color: lightcoral;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<h1>Contact</h1>
+
+<div id="container">
+    
+</div>
+<input type="button" value="Create User">
+<body>
+    <script>
+        // setInterval(()=>{
+            
+        // },2000)
+        var btn = document.querySelector('input')
+        var container = document.getElementById('container');
+        changeUser()
+        btn.onclick=function(){
+           changeUser()
+        }
+        function changeUser(){
+            var xhr;
+        if(window.XMLHttpRequest){
+            xhr = new XMLHttpRequest();
+        }
+        xhr.open("GET",'https://api.randomuser.me/');
+        xhr.send();
+        console.log(xhr)
+        xhr.onreadystatechange = ()=>{
+            if(xhr.readyState==4&&xhr.status==200){
+                const result = xhr.responseText;
+                var json = JSON.parse(result);
+                var res=json.results[0];
+                console.log(res);
+                container.innerHTML = `
+                <img src='${res.picture.large}'></img>
+                <p><span><b class='fa fa-user-circle'></b>Name:</span> ${res.name.title + "&nbsp;"+res.name.last + "&nbsp;"+ res.name.first}</p>
+                <p><span><b class='fa fa-phone'></b>Phone:</span> ${res.phone}</p>
+                <p><span><b class='fa fa-envelope-open'></b>Emial:</span> ${res.email}</p>
+                <p><span><b class='fa fa-calendar'></b>birthday:</span> ${res.dob.date}</p>
+                <p><span><b class='fa fa-location-arrow'></b>Country</span> ${res.location.country} ${res.location.street.name} ${res.location.street.number}</p>
+                `
+            }
+         }
+        }
+    </script>
+</body>
+</html>
